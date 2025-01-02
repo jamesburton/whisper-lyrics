@@ -1,4 +1,4 @@
-import config, whisper
+import sys, config, whisper
 
 def transcribe_audio(audio_file_path: str) -> dict:
     """
@@ -13,7 +13,12 @@ def transcribe_audio(audio_file_path: str) -> dict:
     return model.transcribe(audio_file_path)
 
 if __name__ == "__main__":
-    file_path = "{file_path}"
+    #file_path = "{file_path}"
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <path_to_audio_file>")
+        sys.exit(1)
+    
+    file_path = sys.argv[1]
     transcript = transcribe_audio(file_path)
     
     # print the entire transcript text
@@ -23,3 +28,4 @@ if __name__ == "__main__":
     segments = transcript["segments"]
     for segment in segments:
         print(segment["text"])
+        print("\n")
